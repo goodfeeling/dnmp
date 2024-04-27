@@ -33,7 +33,7 @@ services:
         CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
         PHP_EXTENSIONS: ${PHP_EXTENSIONS}
         TZ: "$TZ"
-    container_name: php
+    container_name: dnmp_php
     expose:
       - 9501
     extra_hosts:
@@ -58,7 +58,7 @@ services:
 #        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
 #        PHP_EXTENSIONS: ${PHP56_EXTENSIONS}
 #        TZ: "$TZ"
-#    container_name: php56
+#    container_name: dnmp_php56
 #    expose:
 #      - 9501
 #    volumes:
@@ -81,7 +81,7 @@ services:
 #        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
 #        PHP_EXTENSIONS: ${PHP54_EXTENSIONS}
 #        TZ: "$TZ"
-#    container_name: php54
+#    container_name: dnmp_php54
 #    volumes:
 #      - ${SOURCE_DIR}:/www/:rw
 #      - ${PHP54_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
@@ -94,35 +94,35 @@ services:
 #    networks:
 #      - default
 
-  mysql:
-    image: mysql:${MYSQL_VERSION}
-    container_name: mysql
-    ports:
-      - "${MYSQL_HOST_PORT}:3306"
-    volumes:
-      - ${MYSQL_CONF_FILE}:/etc/mysql/conf.d/mysql.cnf:ro
-      - ${DATA_DIR}/mysql:/var/lib/mysql/:rw
-    restart: always
-    networks:
-      - default
-    environment:
-      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
-      TZ: "$TZ"
+  # mysql:
+  #   image: mysql:${MYSQL_VERSION}
+  #   container_name: mysql
+  #   ports:
+  #     - "${MYSQL_HOST_PORT}:3306"
+  #   volumes:
+  #     - ${MYSQL_CONF_FILE}:/etc/mysql/conf.d/mysql.cnf:ro
+  #     - ${DATA_DIR}/mysql:/var/lib/mysql/:rw
+  #   restart: always
+  #   networks:
+  #     - default
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+  #     TZ: "$TZ"
 
-#  mysql5:
-#    image: mysql:${MYSQL5_VERSION}
-#    container_name: mysql5
-#    ports:
-#      - "${MYSQL5_HOST_PORT}:3306"
-#    volumes:
-#      - ${MYSQL5_CONF_FILE}:/etc/mysql/conf.d/mysql.cnf:ro
-#      - ${DATA_DIR}/mysql5:/var/lib/mysql/:rw
-#    restart: always
-#    networks:
-#      - default
-#    environment:
-#      MYSQL_ROOT_PASSWORD: "${MYSQL5_ROOT_PASSWORD}"
-#      TZ: "$TZ"
+ mysql5:
+   image: mysql:${MYSQL5_VERSION}
+   container_name: mysql5
+   ports:
+     - "${MYSQL5_HOST_PORT}:3306"
+   volumes:
+     - ${MYSQL5_CONF_FILE}:/etc/mysql/conf.d/mysql.cnf:ro
+     - ${DATA_DIR}/mysql5:/var/lib/mysql/:rw
+   restart: always
+   networks:
+     - default
+   environment:
+     MYSQL_ROOT_PASSWORD: "${MYSQL5_ROOT_PASSWORD}"
+     TZ: "$TZ"
 
 #  openresty:
 #    image:  openresty/openresty:${OPENRESTY_VERSION}
@@ -143,20 +143,20 @@ services:
 #    networks:
 #      - default
 
-#  redis:
-#    image: redis:${REDIS_VERSION}
-#    container_name: redis
-#    ports:
-#      - "${REDIS_HOST_PORT}:6379"
-#    volumes:
-#      - ${REDIS_CONF_FILE}:/etc/redis.conf:ro
-#      - ${DATA_DIR}/redis:/data/:rw
-#    restart: always
-#    entrypoint: ["redis-server", "/etc/redis.conf"]
-#    environment:
-#      TZ: "$TZ"
-#    networks:
-#      - default
+ redis:
+   image: redis:${REDIS_VERSION}
+   container_name: redis
+   ports:
+     - "${REDIS_HOST_PORT}:6379"
+   volumes:
+     - ${REDIS_CONF_FILE}:/etc/redis.conf:ro
+     - ${DATA_DIR}/redis:/data/:rw
+   restart: always
+   entrypoint: ["redis-server", "/etc/redis.conf"]
+   environment:
+     TZ: "$TZ"
+   networks:
+     - default
 
 #  memcached:
 #    image: memcached:${MEMCACHED_VERSION}
@@ -285,18 +285,20 @@ services:
 #      - "${LOGSTASH_HOST_PORT_C}:9600"
 #      - "${LOGSTASH_HOST_PORT_S}:5044"
 
-#  node:
-#    image: node:${NODE_VERSION}
-#    environment:
-#      - NODE_ENV=production
-#    volumes:
-#      - ${SOURCE_DIR}:/www/:rw
-#    expose:
-#      - "8081"
-#    networks:
-#      - default
-#    stdin_open: true
-#    tty: true
+  node:
+    image: node:${NODE_VERSION}
+    container_name: dnpm_node
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ${SOURCE18_DIR}:/www/:rw
+    expose:
+      - "8081"
+    networks:
+      - default
+    container_name: dnmp_node
+    stdin_open: true
+    tty: true
 
 
 #  supervisor:
@@ -324,6 +326,20 @@ services:
 #      - SYS_PTRACE
 #    networks:
 #      - default
-
+   postgres:
+    image: postgres:${POSTGRES_VERSION}
+    container_name: postgresql
+    hostname: postgresql
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      TZ: Asia/Shanghai
+      PGTZ: Asia/Shanghai
+    ports:
+      - '${POSTGRES_PORT}:5432'
+    volumes:
+      - ${POSTGRES_DATA}:/var/lib/postgresql/data/:rw
 networks:
   default:
