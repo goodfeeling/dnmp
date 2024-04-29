@@ -102,3 +102,16 @@ node() {
         --workdir /www \
         dnmp_node node "$@"
 }
+
+# n
+n() {
+    tty=
+    tty -s && tty=--tty
+    docker run \
+        $tty \
+        --interactive \
+        --rm \
+        --volume $PWD:/www:rw \
+        --workdir /www \
+        dnmp_node n "$@"
+}
