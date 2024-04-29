@@ -287,7 +287,7 @@ services:
 
   node:
     image: node:${NODE_VERSION}
-    container_name: dnpm_node
+    container_name: node
     environment:
       - NODE_ENV=production
     volumes:
