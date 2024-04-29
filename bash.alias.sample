@@ -89,7 +89,8 @@ composer54 () {
         --workdir /app \
         dnmp_php54 composer "$@"
 }
-# 一些命令
+
+# 可以自定义执行命令
 dncmd() {
     tty=
     tty -s && tty=--tty
@@ -101,6 +102,7 @@ dncmd() {
         --workdir /www \
         node "$@"
 }
+
 # node
 dnode() {
     tty=
