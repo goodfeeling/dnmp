@@ -91,7 +91,7 @@ composer54 () {
 }
 
 # node
-node() {
+dnode() {
     tty=
     tty -s && tty=--tty
     docker run \
@@ -100,11 +100,24 @@ node() {
         --rm \
         --volume $PWD:/www:rw \
         --workdir /www \
-        dnmp_node node "$@"
+        node node "$@"
+}
+
+# node
+dnpm() {
+    tty=
+    tty -s && tty=--tty
+    docker run \
+        $tty \
+        --interactive \
+        --rm \
+        --volume $PWD:/www:rw \
+        --workdir /www \
+        node node "$@"
 }
 
 # n
-n() {
+dn() {
     tty=
     tty -s && tty=--tty
     docker run \
@@ -113,5 +126,5 @@ n() {
         --rm \
         --volume $PWD:/www:rw \
         --workdir /www \
-        dnmp_node n "$@"
+        node n "$@"
 }
