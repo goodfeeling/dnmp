@@ -112,6 +112,9 @@ services:
   mysql5:
    image: mysql:${MYSQL5_VERSION}
    container_name: mysql5
+   environment:
+     MYSQL_ROOT_PASSWORD: "${MYSQL5_ROOT_PASSWORD}"
+     TZ: "$TZ"
    ports:
      - "${MYSQL5_HOST_PORT}:3306"
    volumes:
@@ -120,9 +123,6 @@ services:
    restart: always
    networks:
      - default
-   environment:
-     MYSQL_ROOT_PASSWORD: "${MYSQL5_ROOT_PASSWORD}"
-     TZ: "$TZ"
 
 #  openresty:
 #    image:  openresty/openresty:${OPENRESTY_VERSION}
