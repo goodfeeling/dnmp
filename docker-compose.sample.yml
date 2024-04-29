@@ -296,7 +296,6 @@ services:
       - "8081"
     networks:
       - default
-    container_name: dnmp_node
     stdin_open: true
     tty: true
 
