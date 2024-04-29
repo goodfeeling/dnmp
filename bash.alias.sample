@@ -89,7 +89,18 @@ composer54 () {
         --workdir /app \
         dnmp_php54 composer "$@"
 }
-
+# 一些命令
+dncmd() {
+    tty=
+    tty -s && tty=--tty
+    docker run \
+        $tty \
+        --interactive \
+        --rm \
+        --volume $PWD:/www:rw \
+        --workdir /www \
+        node "$@"
+}
 # node
 dnode() {
     tty=
@@ -113,7 +124,7 @@ dnpm() {
         --rm \
         --volume $PWD:/www:rw \
         --workdir /www \
-        node node "$@"
+        node npm "$@"
 }
 
 # n
