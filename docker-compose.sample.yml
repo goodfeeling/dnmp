@@ -336,7 +336,7 @@ services:
     ports:
       - '${POSTGRES_PORT}:5432'
     volumes:
-      - .${POSTGRES_DATA}:/var/lib/postgresql/data
+      - .${POSTGRES_DATA}:/var/lib/postgresql/data/:rw
     restart: always
 networks:
   default:
